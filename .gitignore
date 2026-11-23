@@ -1,0 +1,12 @@
+# 기획서 등 개인 정보가 들어간 문서는 저장소에 올리지 않습니다
+*.docx
+*.pdf
+~$*
+
+# 운영체제와 편집기 파일
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Claude Code 개인 설정
+.claude/settings.local.json

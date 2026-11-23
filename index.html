@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>섬마을 자기소개</title>
+  <meta name="description" content="작은 섬마을을 걸어 다니며 알아가는 게임형 자기소개 사이트">
+  <meta name="theme-color" content="#226b9a">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' shape-rendering='crispEdges'%3E%3Crect width='16' height='16' fill='%232c7fae'/%3E%3Crect x='2' y='9' width='12' height='4' fill='%23ecd7a0'/%3E%3Crect x='3' y='7' width='10' height='4' fill='%237dbb5c'/%3E%3Crect x='10' y='2' width='2' height='6' fill='%23d6453d'/%3E%3Crect x='10' y='4' width='2' height='1' fill='%23ffffff'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/galmuri@2.40.3/dist/galmuri.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <canvas id="world" tabindex="0" role="img"
+    aria-label="섬마을 지도. 방향키로 걷고 Space로 장소를 살펴봅니다. 게임 없이 내용을 보려면 한눈에 보기 버튼을 누르세요."></canvas>
+
+  <!-- S02 섬 지도 위의 표시 -->
+  <header class="hud" id="hud" hidden>
+    <p class="hud__name px-box" id="hud-name"></p>
+    <div class="hud__right">
+      <div class="stamps px-box" id="stamps" role="group" aria-label="스탬프"></div>
+      <button class="btn" type="button" data-open-sheet>한눈에 보기</button>
+    </div>
+  </header>
+
+  <div class="prompt" id="prompt" hidden>
+    <button class="btn btn--primary" type="button" id="prompt-btn">
+      <img class="px" id="prompt-icon" src="data:," alt="" width="24" height="24">
+      <span id="prompt-label"></span>
+    </button>
+  </div>
+
+  <div class="talk px-box" id="talk" hidden>
+    <p class="talk__who" id="talk-who"></p>
+    <p class="talk__text" id="talk-text" aria-hidden="true"></p>
+    <button class="talk__next" type="button" id="talk-next">다음</button>
+  </div>
+  <p class="sr-only" id="talk-live" aria-live="polite"></p>
+
+  <!-- S01 시작 화면 -->
+  <section class="start" id="start" aria-labelledby="start-title">
+    <div class="ticket px-box">
+      <div class="ticket__main">
+        <p class="ticket__route">
+          <span>육지 선착장</span>
+          <img class="px" id="route-boat" src="data:," alt="에서 배를 타고" width="24" height="24">
+          <span id="start-dest"></span>
+        </p>
+        <h1 class="ticket__title" id="start-title">섬</h1>
+        <p class="ticket__tagline" id="start-tagline"></p>
+        <ul class="ticket__how">
+          <li><span class="key">PC</span>방향키나 WASD로 걷고, 장소 앞에서 Space로 살펴봐요</li>
+          <li><span class="key">휴대폰</span>가고 싶은 곳을 누르면 걸어가요</li>
+        </ul>
+        <div class="ticket__actions">
+          <button class="btn btn--primary btn--big" type="button" id="btn-start">섬 둘러보기</button>
+          <button class="btn btn--big" type="button" data-open-sheet>한눈에 보기</button>
+        </div>
+      </div>
+      <div class="ticket__stub" aria-hidden="true">
+        <p class="stub__title">승선권</p>
+        <dl class="stub__rows">
+          <dt>출항</dt><dd id="stub-date"></dd>
+          <dt>구간</dt><dd>편도</dd>
+          <dt>인원</dt><dd>1명</dd>
+        </dl>
+        <p class="stub__note">스탬프 6개를 모아 보세요</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- S03~S09 장소 창 -->
+  <dialog class="panel px-box" id="panel" aria-labelledby="panel-title">
+    <header class="panel__head">
+      <img class="px panel__icon" id="panel-icon" src="data:," alt="" width="36" height="36">
+      <div class="panel__titles">
+        <h2 class="panel__title" id="panel-title"></h2>
+        <p class="panel__sub" id="panel-sub"></p>
+      </div>
+      <span class="panel__stamp" id="panel-stamp" hidden>방문<br>완료</span>
+      <button class="btn btn--small panel__close" type="button" data-close>닫기</button>
+    </header>
+    <div class="panel__body" id="panel-body"></div>
+  </dialog>
+
+  <!-- S10 한눈에 보기 (상태창) -->
+  <dialog class="panel panel--sheet px-box" id="sheet" aria-labelledby="sheet-title">
+    <header class="panel__head">
+      <div class="panel__titles">
+        <h2 class="panel__title" id="sheet-title">한눈에 보기</h2>
+        <p class="panel__sub">게임 없이 전체 내용을 봐요</p>
+      </div>
+      <button class="btn btn--small panel__close" type="button" data-close>닫기</button>
+    </header>
+    <div class="panel__body" id="sheet-body"></div>
+  </dialog>
+
+  <noscript>
+    <p class="noscript">이 사이트는 자바스크립트로 섬을 그립니다. 브라우저 설정에서 자바스크립트를 켜 주세요.</p>
+  </noscript>
+
+  <script src="js/config.js"></script>
+  <script src="js/content.js"></script>
+  <script src="js/art.js"></script>
+  <script src="js/world.js"></script>
+  <script src="js/guestbook.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/game.js"></script>
+</body>
+</html>
