@@ -1,24 +1,24 @@
 /*
  * 사이트에 보이는 소개 내용은 모두 이 파일에 있습니다.
- * [대괄호] 부분을 본인 내용으로 바꾸고 저장하면 섬 전체에 반영됩니다.
+ * 내용을 바꾸고 저장하면 섬 전체에 반영됩니다.
  * 항목을 더 넣고 싶으면 { ... } 한 덩어리를 복사해서 쉼표(,)로 이어 붙이세요.
  */
 window.SITE_CONTENT = {
   profile: {
-    name: '[이름]',
-    job: '[직업: 예) 클라우드 개발자 지망생]',
-    level: '[학년]', // 한눈에 보기에서 "Lv. 3학년"처럼 보입니다
-    tagline: '[한 줄 소개: 예) 작은 것도 끝까지 만들어 보는 사람]',
+    name: '장동호',
+    job: '한양대학교 에리카 ICT융합학부',
+    level: '2학년', // 한눈에 보기에서 "Lv. 2학년"처럼 보입니다
+    tagline: '하고자 하는 일에 최선을 다하는 사람',
     greeting: '어서 오세요! 여기가 제 집이에요.',
     about: [
-      '[자기소개 첫 문단: 어떤 사람인지, 요즘 무엇에 빠져 있는지 적어 주세요.]',
-      '[둘째 문단: 이 수업에서 배우고 싶은 것이나 함께하고 싶은 일을 적어 주세요.]',
+      '저는 하고자 하는 일에 최선을 다하는 사람이고, 요즘은 게임 개발에 빠져 있습니다.',
+      '이 수업에서는 클라우드와 데이터베이스를 직접 다뤄 보며, 만든 것을 실제 서비스로 배포하고 운영하는 방법을 배우고 싶습니다. 게임에도 기록, 랭킹, 친구 목록처럼 데이터를 저장하고 꺼내 쓰는 부분이 꼭 필요하기 때문입니다. 지금 보고 계신 이 섬도 그 연습의 시작이고, 앞으로 방명록부터 하나씩 기능을 더해 가겠습니다.',
     ],
     facts: [
-      { label: '전공', value: '[학과]' },
-      { label: '관심 분야', value: '[관심 분야]' },
-      { label: '사는 곳', value: '[사는 곳]' },
-      { label: 'MBTI', value: '[MBTI]' },
+      { label: '전공', value: 'ICT융합학부' },
+      { label: '관심 분야', value: '개발' },
+      { label: '사는 곳', value: '전라남도 화순군' },
+      { label: 'MBTI', value: 'INFJ' },
     ],
   },
 
@@ -33,23 +33,23 @@ window.SITE_CONTENT = {
   },
 
   education: [
-    { period: '[2023 ~ 현재]', school: '[대학교 이름]', detail: '[학과, 학년]' },
+    { period: '2023 ~ 현재', school: '한양대학교 에리카', detail: 'ICT융합학부 2학년' },
   ],
 
   // level: 1~5 사이 숫자로 본인 수준에 맞게 고치세요
   skills: [
     { name: 'HTML / CSS', level: 3 },
     { name: 'JavaScript', level: 3 },
-    { name: 'AWS (S3, CloudFront)', level: 2 },
-    { name: '데이터베이스 (SQL, DynamoDB)', level: 2 },
-    { name: 'Git / GitHub', level: 2 },
+    { name: 'AWS (S3, CloudFront)', level: 3 },
+    { name: '데이터베이스 (SQL, DynamoDB)', level: 3 },
+    { name: 'Git / GitHub', level: 4 },
   ],
 
   certificates: [
-    { name: '[자격증 이름]', date: '[취득 연월]' },
+    { name: 'ADsP (데이터분석 준전문가)', date: '2026' },
   ],
 
-  courses: ['클라우드 데이터베이스', '[수강 과목]', '[수강 과목]'],
+  courses: ['클라우드 데이터베이스', '데이터베이스', '컴퓨터 알고리즘', 'ICT창업캡스톤'],
 
   // date는 정렬용(최신순)입니다. YYYY-MM 형식으로 적어 주세요.
   projects: [
@@ -60,36 +60,32 @@ window.SITE_CONTENT = {
       role: '기획, 게임 화면 개발, AWS 배포',
       tech: ['HTML', 'CSS', 'JavaScript', 'Canvas', 'S3', 'CloudFront'],
       result: '작은 섬마을을 걸어 다니며 소개를 읽는 게임형 자기소개 사이트입니다.',
-      links: [],
-    },
-    {
-      title: '[프로젝트 이름]',
-      date: '2026-06',
-      period: '[2026.03 ~ 2026.06]',
-      role: '[맡은 역할]',
-      tech: ['[사용 기술]'],
-      result: '[결과나 배운 점]',
-      links: [{ label: 'GitHub', url: 'https://github.com/' }],
+      links: [{ label: 'GitHub', url: 'https://github.com/dongho930/self-intro-island' }],
     },
   ],
 
   timeline: [
     { year: '2026', text: '클라우드 데이터베이스 수업에서 자기소개 섬 웹앱 제작' },
-    { year: '[2023]', text: '[대학교 입학]' },
+    { year: '2026', text: 'ADsP (데이터분석 준전문가) 취득' },
+    { year: '2023', text: '한양대학교 에리카 ICT융합학부 입학' },
   ],
 
-  goals: ['[앞으로의 목표 1]', '[앞으로의 목표 2]'],
+  goals: [
+    '클라우드와 데이터베이스로 기록과 랭킹이 저장되는 온라인 게임 만들기',
+    '직접 만든 게임을 실제 사람들이 플레이하는 서비스로 출시하기',
+    '이 섬에 방명록을 연결해 방문자 모두가 함께 쓰는 공간으로 키우기',
+  ],
 
   hobbies: [
-    { name: '[취미 1]', desc: '[한 줄 설명]' },
-    { name: '[취미 2]', desc: '[한 줄 설명]' },
-    { name: '[취미 3]', desc: '[한 줄 설명]' },
+    { name: '게임', desc: '즐기다 보면 어떻게 만들었는지 궁금해지는, 게임 개발의 출발점' },
+    { name: '운동', desc: '몸을 움직이며 머리를 식히는 시간' },
+    { name: '노래 감상', desc: '작업할 때도 쉴 때도 늘 함께하는 것' },
   ],
 
   contactNote: '수업 과제나 팀 프로젝트 이야기 모두 환영해요.',
   contacts: [
-    { label: '이메일', value: '[you@example.com]', url: 'mailto:you@example.com' },
-    { label: 'GitHub', value: 'github.com/[아이디]', url: 'https://github.com/' },
+    { label: '이메일', value: 'zakuv2@naver.com', url: 'mailto:zakuv2@naver.com' },
+    { label: 'GitHub', value: 'github.com/dongho930', url: 'https://github.com/dongho930' },
   ],
 
   // 섬에 처음 도착했을 때와 여섯 곳을 다 둘러봤을 때 하는 말

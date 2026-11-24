@@ -55,4 +55,5 @@ AppSync 연결 부분은 아직 실제 API로 시험해 보지 않았습니다.
 
 ## S3에 올릴 파일
 
-`index.html`, `css/`, `js/` 세 가지입니다. 기획서(.docx)와 `README.md`, `.claude/` 폴더는 올리지 않습니다.
+`index.html`, `css/`, `js/` 세 가지입니다. 기획서(.docx)와 `README.md`, `.claude/`, `docs/` 폴더는 올리지 않습니다.
+S3 버킷, CloudFront(OAC), 버킷 정책을 만드는 순서는 [docs/aws-deploy-guide.md](docs/aws-deploy-guide.md)에 있습니다.
