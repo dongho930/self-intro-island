@@ -41,10 +41,16 @@ js/world.js       섬 지도, 길, 장소 위치, 길 찾기
 js/guestbook.js   방명록 저장 (미리보기 모드 / AppSync 모드)
 js/ui.js          시작 화면, 스탬프, 대화창, 장소 창, 방명록 화면
 js/game.js        게임 진행 (이동, 카메라, 그리기)
+images/           장소 장면 그림 6장, 집주인 얼굴, 링크 미리보기 그림
 ```
 
-이미지 파일 없이 모든 그림을 코드로 그리기 때문에, S3에는 위 파일만 올리면 됩니다.
+섬 지도, 캐릭터, 건물, 아이콘은 `js/art.js`에서 코드로 그립니다.
+창을 열었을 때 크게 보이는 그림(장소 장면, 집주인 얼굴)과 링크 미리보기 그림만 `images/`의 PNG 파일입니다.
+이 그림들은 Codex CLI의 이미지 생성 기능(gpt-image-2)으로 만들고 크기를 줄여 넣었습니다. 프롬프트는 [docs/image-prompts.md](docs/image-prompts.md)에 있습니다.
+그림 파일이 없거나 불러오지 못하면 장면 그림은 빠지고, 얼굴은 코드로 그린 16px 얼굴로 대신 보입니다.
 글꼴은 CDN에서 불러옵니다. (갈무리: jsDelivr, 고운돋움: Google Fonts)
+
+링크 미리보기용 `og:` 태그는 `index.html` 맨 위에 있습니다. 미리보기 서비스는 자바스크립트를 실행하지 않아서, 제목과 배포 주소를 이 태그에 직접 적어 두었습니다. 이름이나 배포 주소가 바뀌면 여기도 고쳐 주세요.
 
 ## 방명록
 
@@ -55,5 +61,5 @@ AppSync 연결 부분은 아직 실제 API로 시험해 보지 않았습니다.
 
 ## S3에 올릴 파일
 
-`index.html`, `css/`, `js/` 세 가지입니다. 기획서(.docx)와 `README.md`, `.claude/`, `docs/` 폴더는 올리지 않습니다.
+`index.html`, `css/`, `js/`, `images/` 네 가지입니다. 기획서(.docx)와 `README.md`, `.claude/`, `docs/` 폴더는 올리지 않습니다.
 S3 버킷, CloudFront(OAC), 버킷 정책을 만드는 순서는 [docs/aws-deploy-guide.md](docs/aws-deploy-guide.md)에 있습니다.

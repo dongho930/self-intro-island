@@ -57,13 +57,37 @@
     return iconCache[id];
   }
 
-  let portrait = null;
-  function portraitUrl() {
-    if (!portrait) {
+  /* ---------- 그림 파일 (images/, Codex CLI로 만든 픽셀아트) ----------
+   * 파일이 없거나 불러오지 못하면 코드로 그린 그림으로 대신합니다.
+   * 창을 열 때 <img>를 만들기 때문에 그림도 그때 처음 내려받습니다. */
+
+  // 그림 파일이 없을 때 쓰는 16px 얼굴 (맵의 집주인 캐릭터)
+  let codePortrait = null;
+  function codePortraitUrl() {
+    if (!codePortrait) {
       const sheet = window.Art.character({ hair: window.Art.P.ink, shirt: window.Art.P.white, pants: window.Art.P.roofBlue, shoes: window.Art.P.ink });
-      portrait = sheet.down[0].toDataURL();
+      codePortrait = sheet.down[0].toDataURL();
     }
-    return portrait;
+    return codePortrait;
+  }
+
+  function portraitImg(cls, size) {
+    const img = el('img', { class: cls, src: 'images/portrait.png', alt: '', width: size, height: size });
+    img.addEventListener('error', () => {
+      img.classList.add('px');
+      img.src = codePortraitUrl();
+    }, { once: true });
+    return img;
+  }
+
+  // 장소 창 맨 위의 장면 그림. 게시판(방명록)은 장면 그림 없이 엽니다.
+  const SCENE_IDS = ['home', 'library', 'workshop', 'lighthouse', 'pyeongsang', 'mailbox'];
+  function sceneFigure(id) {
+    if (!SCENE_IDS.includes(id)) return null;
+    const fig = el('figure', { class: 'scene', 'aria-hidden': 'true' });
+    const img = el('img', { class: 'px scene__img', src: `images/place-${id}.png`, alt: '', width: 256, height: 128, decoding: 'async' });
+    img.addEventListener('error', () => fig.remove(), { once: true });
+    return add(fig, img);
   }
 
   const islandName = () => `${C.profile.name}의 섬`;
@@ -78,7 +102,7 @@
   function sayBlock(text) {
     if (!text) return null;
     return el('div', { class: 'say' },
-      el('img', { class: 'px say__face', src: portraitUrl(), alt: '', width: 48, height: 48 }),
+      portraitImg('say__face', 48),
       el('p', { class: 'say__text', text }));
   }
 
@@ -296,7 +320,7 @@
     const p = C.profile;
     body.replaceChildren(el('div', { class: 'sheet' },
       el('aside', { class: 'sheet__card' },
-        el('img', { class: 'px sheet__portrait', src: portraitUrl(), alt: '', width: 96, height: 96 }),
+        portraitImg('sheet__portrait', 96),
         el('p', { class: 'sheet__name', text: p.name }),
         el('p', { class: 'sheet__job' }, el('span', { class: 'lv', text: `Lv. ${p.level}` }), el('span', { text: p.job })),
         el('p', { class: 'sheet__tagline', text: p.tagline }),
@@ -340,6 +364,8 @@
     const body = $('panel-body');
     body.replaceChildren();
     RENDER[place.id](body, place);
+    const scene = sceneFigure(place.id);
+    if (scene) body.prepend(scene);
     panelClose = opts.onClose;
     panel.showModal();
     body.scrollTop = 0;
